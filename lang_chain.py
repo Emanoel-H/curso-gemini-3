@@ -4,7 +4,7 @@ from my_models import GEMINI_FLASH
 from my_keys import GEMINI_API_KEY
 from my_helper import encode_image
 from pathlib import Path
-
+from langchain.prompts import ChatPromptTemplate
 
 llm = ChatGoogleGenerativeAI(
     api_key= GEMINI_API_KEY,
