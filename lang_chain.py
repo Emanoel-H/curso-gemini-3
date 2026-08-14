@@ -15,3 +15,21 @@ path_image = Path.home() / "Desktop" / "curso_gemini_3" / "images" / "exemplo_gr
 
 image_64 = encode_image(path_image)
 
+pergunta = "Descreva a imagem: "
+
+mensagem = HumanMessage(
+    content= [
+        {
+            "type" : "text",
+            "text" : pergunta
+        },
+        {
+            "type" : "image_url",
+            "image_url" : f"data:image/jpeg;base64,{image_64}"
+        }
+    ],
+)
+
+resposta = llm.invoke([mensagem])
+
+print(resposta)
