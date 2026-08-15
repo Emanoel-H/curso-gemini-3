@@ -5,7 +5,8 @@ def main():
     agent = OrchestratorAgent()
     executor = AgentExecutor(
         agent=agent.agent,
-        tools=agent.tools
+        tools=agent.tools,
+        handle_parsing_errors=True
     )
 
     pergunta = "Faça uma análise da imagem exemplo_grafico.jpg"
