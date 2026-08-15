@@ -6,6 +6,7 @@ from my_helper import encode_image
 from pathlib import Path
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
+from model_image_details import ModelImageDetails
 
 llm = ChatGoogleGenerativeAI(
     api_key= GEMINI_API_KEY,
