@@ -1,16 +1,16 @@
-# This is a sample Python script.
+from langchain.agents import AgentExecutor
+from orchestrator import OrchestratorAgent
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main():
+    agent = OrchestratorAgent()
+    executor = AgentExecutor(
+        agent=agent.agent,
+        tools=agent.tools
+    )
 
+    pergunta = "Faça uma análise da imagem exemplo_grafico.jpg"
+    resposta = executor.invoke({"input": pergunta})
+    print(resposta)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    main()
