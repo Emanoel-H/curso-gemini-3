@@ -14,6 +14,7 @@ class OrchestratorAgent:
         )
 
         image_analysis_tool = ImageAnalysisTool()
+        explaining_tool = ExplainingTool()
 
         self.tools = [
             Tool(
@@ -21,6 +22,12 @@ class OrchestratorAgent:
                 func = image_analysis_tool.run,
                 description= image_analysis_tool.description,
                 return_direct = image_analysis_tool.return_direct
+            ),
+            Tool(
+                name=explaining_tool.name,
+                func=explaining_tool.run,
+                description=explaining_tool.description,
+                return_direct=explaining_tool.return_direct
             )
         ]
 
