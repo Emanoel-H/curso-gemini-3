@@ -4,6 +4,7 @@ from langchain.prompts import PromptTemplate
 from my_models import GEMINI_FLASH
 from my_keys import GEMINI_API_KEY
 from tavily_llm import web_search
+from langgraph.prebuilt import create_react_agent
 
 llm = ChatGoogleGenerativeAI(
             api_key=GEMINI_API_KEY,
