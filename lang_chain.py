@@ -46,7 +46,26 @@ template_analisador = ChatPromptTemplate.from_messages(
 
 cadeia = template_analisador | llm | StrOutputParser()
 
-resposta = cadeia.invoke({"image_64": image_64})
+# resposta = cadeia.invoke({"image_64": image_64})
+
+template_resposta = PromptTemplate(
+    template = """
+    Gere um resumo utilizando uma linguagem clara e objetiva focada no público brasileiro. 
+    A ideia é que a comunicação do resultado seja o mais fácil possível, 
+    priorizando registros para consultas posteriores.
+    
+    # O Resultado da imagem
+    {resposta_cadeia_analise_imagem}
+    """,
+    input_variables= ["resposta_cadeia_analise_imagem"]
+)
+
+cadeia_resumo = template_resposta | llm | StrOutputParser()
+
+cadeia_completa = cadeia | cadeia_resumo
+
+resposta = cadeia_completa.invoke({"image_64": image_64})
+
 print(resposta)
 
 # mensagem = HumanMessage(
