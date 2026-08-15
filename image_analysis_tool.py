@@ -1,4 +1,13 @@
 from langchain.tools import BaseTool
+from langchain_google_genai import ChatGoogleGenerativeAI
+from my_models import GEMINI_FLASH
+from my_keys import GEMINI_API_KEY
+from my_helper import encode_image
+from pathlib import Path
+from langchain.prompts import ChatPromptTemplate, PromptTemplate
+from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
+from model_image_details import ModelImageDetails
+import ast
 
 class ImageAnalysisTool(BaseTool):
     name:str = "ImageAnalysisTool"
@@ -12,4 +21,73 @@ class ImageAnalysisTool(BaseTool):
     return_direct : bool = False
 
     def _run(self, acao):
-        return ""
+        acao = ast.literal_eval(acao)
+        caminho_imagem = acao.get("nome_imagem", "")
+
+        llm = ChatGoogleGenerativeAI(
+            api_key=GEMINI_API_KEY,
+            model=GEMINI_FLASH
+        )
+
+        path_image = Path.home() / "Desktop" / "curso_gemini_3" / "images" / f"{caminho_imagem}"
+
+        image_64 = encode_image(path_image)
+
+
+        template_analisador = ChatPromptTemplate.from_messages(
+            [
+                ("system", """
+                Assuma que você é um analisador de imagens. A sua tarefa principal
+                consiste em analisar uma imagem e extrair informações importantes 
+                de forma objetiva.
+
+                # FORMATO DE SAÍDA
+                Descrição da Imagem: 'Coloque a sua descrição da imagem aqui'
+                Rótulos: 'Coloque uma lista com três termos chave separados por vírgula'
+
+                """),
+                ("user",
+                 [
+                     {
+                         "type": "text",
+                         "text": "Descreva a imagem: "
+                     },
+                     {
+                         "type": "image_url",
+                         "image_url": {"url": "data:image/jpeg;base64,{image_64}"}
+                     }
+                 ])
+            ]
+        )
+
+        cadeia = template_analisador | llm | StrOutputParser()
+
+        parser_json_imagem = JsonOutputParser(
+            pydantic_object=ModelImageDetails
+        )
+
+        template_resposta = PromptTemplate(
+            template="""
+            Gere um resumo utilizando uma linguagem clara e objetiva focada no público brasileiro. 
+            A ideia é que a comunicação do resultado seja o mais fácil possível, 
+            priorizando registros para consultas posteriores.
+
+            # O Resultado da imagem
+            {resposta_cadeia_analise_imagem}
+
+            # FORMATO DE SAÍDA
+            {formato_saida}
+            """,
+            input_variables=["resposta_cadeia_analise_imagem"],
+            partial_variables={
+                "formato_saida": parser_json_imagem.get_format_instructions()
+            }
+        )
+
+        cadeia_resumo = template_resposta | llm | parser_json_imagem
+
+        cadeia_completa = cadeia | cadeia_resumo
+
+        resposta = cadeia_completa.invoke({"image_64": image_64})
+
+        return resposta
