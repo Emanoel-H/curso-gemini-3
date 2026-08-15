@@ -3,6 +3,7 @@ from my_models import GEMINI_FLASH
 from my_keys import GEMINI_API_KEY
 from langchain import hub
 from langchain.agents import create_react_agent, Tool
+from image_analysis_tool import ImageAnalysisTool
 
 class OrchestratorAgent:
     def __init__(self):
@@ -11,7 +12,7 @@ class OrchestratorAgent:
             model= GEMINI_FLASH
         )
 
-        image_analysis_tool = None
+        image_analysis_tool = ImageAnalysisTool()
 
         self.tools = [
             Tool(
