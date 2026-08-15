@@ -4,6 +4,7 @@ from my_keys import GEMINI_API_KEY
 from langchain import hub
 from langchain.agents import create_react_agent, Tool
 from image_analysis_tool import ImageAnalysisTool
+from explaining_tool import ExplainingTool
 
 class OrchestratorAgent:
     def __init__(self):
