@@ -9,7 +9,8 @@ def main():
         handle_parsing_errors=True
     )
 
-    pergunta = "Faça uma análise da imagem exemplo_grafico.jpg"
+    # pergunta = "Faça uma análise da imagem exemplo_grafico.jpg"
+    pergunta = "Gostaria que você me explicasse como funcionam os desvios condicionais"
     resposta = executor.invoke({"input": pergunta})
     print(resposta)
 
