@@ -49,6 +49,10 @@ cadeia = template_analisador | llm | StrOutputParser()
 
 # resposta = cadeia.invoke({"image_64": image_64})
 
+parser_json_imagem = JsonOutputParser(
+    pydantic_object= ModelImageDetails
+)
+
 template_resposta = PromptTemplate(
     template = """
     Gere um resumo utilizando uma linguagem clara e objetiva focada no público brasileiro. 
@@ -57,11 +61,19 @@ template_resposta = PromptTemplate(
     
     # O Resultado da imagem
     {resposta_cadeia_analise_imagem}
+    
+    # FORMATO DE SAÍDA
+    {formato_saida}
     """,
-    input_variables= ["resposta_cadeia_analise_imagem"]
+    input_variables= ["resposta_cadeia_analise_imagem"],
+    partial_variables= {
+        "formato_saida" : parser_json_imagem.get_format_instructions()
+    }
 )
 
-cadeia_resumo = template_resposta | llm | StrOutputParser()
+# cadeia_resumo = template_resposta | llm | StrOutputParser()
+
+cadeia_resumo = template_resposta | llm | parser_json_imagem
 
 cadeia_completa = cadeia | cadeia_resumo
 
