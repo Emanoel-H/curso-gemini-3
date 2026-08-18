@@ -117,3 +117,10 @@ resposta_1 = run_react_agent(pergunta_1)
 print(f"\n**RESPOSTA FINAL DO AGENTE 1:** \n{resposta_1}\n")
 
 print("\n" + "=" * 50 + "\n")
+
+pergunta_2 = "Quanto custa uma impressora?"
+print(f"**Interação 2: {pergunta_2}**")
+resposta_2 = run_react_agent(pergunta_2)
+print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
+
+print("\n" + "=" * 50 + "\n")
