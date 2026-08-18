@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, END
 from typing import TypedDict, Annotated, List
 import operator
 
-import google.generativeai as genai
+import google.genai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langchain_core.messages import AnyMessage, SystemMessage, HumanMessage, ToolMessage
