@@ -195,13 +195,6 @@ print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
 
 print("\n" + "=" * 50 + "\n")
 
-pergunta_3 = "Tem cadeira no estoque?"
-print(f"**Interação 3: {pergunta_3}**")
-resposta_3 = run_react_agent(pergunta_3)
-print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
-
-print("\n" + "=" * 50 + "\n")
-
 pergunta_4 = "Qual o produto mais caro do estoque?"
 print(f"**Interação 4: {pergunta_4}**")
 resposta_4 = run_react_agent(pergunta_4)
