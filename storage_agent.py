@@ -124,3 +124,10 @@ resposta_2 = run_react_agent(pergunta_2)
 print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
 
 print("\n" + "=" * 50 + "\n")
+
+pergunta_3 = "Tem cadeira no estoque?"
+print(f"**Interação 3: {pergunta_3}**")
+resposta_3 = run_react_agent(pergunta_3)
+print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
+
+print("\n" + "=" * 50 + "\n")
