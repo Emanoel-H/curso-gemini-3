@@ -16,6 +16,7 @@ Ações disponíveis:
     - consultar_preco_produto: retorna o preço unitário de um produto (ex: "consultar_preco_produto: mouse gamer")
     - consultar_produto_mais_caro: retorna o preço e o nome do produto 
       mais caro do estoque (ex: "consultar_produto_mais_caro: monitor R$ 50.00") 
+    - calcular_valor_total_lista: calcula o valor total de uma lista de itens de compra. Recebe uma string com itens separados por virgula.
 
 Exemplo:
 Pergunta: Quantos monitores temos em estoque?
@@ -85,6 +86,42 @@ def consultar_produto_mais_caro() -> str:
 
     return f"O produto mais caro é o {produto_mais_caro}, custando R${preco_mais_alto:.2f}."
 
+
+def calcular_valor_total_lista(lista_itens: str) -> str:
+    precos_do_inventario = {
+        "monitor": 999.90,
+        "teclado": 150.00,
+        "mouse gamer": 99.50,
+        "webcam": 120.00,
+        "headset": 180.00,
+        "impressora": 750.00
+    }
+
+    itens_processados = [item.strip().lower() for item in lista_itens.split(',')]
+
+    valor_total = 0.0
+    itens_nao_encontrados = []
+    itens_encontrados = []
+    resposta = ""
+
+    for item in itens_processados:
+        if item in precos_do_inventario:
+            valor_total += precos_do_inventario[item]
+            itens_encontrados.append(item)
+        else:
+            itens_nao_encontrados.append(item)
+
+    if valor_total != 0:
+        for item in itens_encontrados:
+            if item in precos_do_inventario:
+                resposta += f"Produto: {item} | Preço: R$ {precos_do_inventario[item]:.2f}\n"
+
+    resposta += f"O valor total dos itens encontrados é R$ {valor_total:.2f}."
+    if itens_nao_encontrados:
+        resposta += f"\nOs seguintes itens não foram encontrados e não foram incluídos no cálculo: {', '.join(itens_nao_encontrados)}"
+
+    return resposta
+
 print(consultar_estoque("teclado"))
 print(consultar_preco_produto("mouse gamer"))
 
@@ -122,6 +159,8 @@ def run_react_agent(pergunta: str, max_iterations: int = 5) -> str:
                 observacao = consultar_preco_produto(action_arg)
             elif action_name == "consultar_produto_mais_caro":
                 observacao = consultar_produto_mais_caro()
+            elif action_name == "calcular_valor_total_lista":
+                observacao = calcular_valor_total_lista(action_arg)
             else:
                 observacao = f"Erro: Ação '{action_name}' desconhecida."
 
@@ -135,37 +174,44 @@ def run_react_agent(pergunta: str, max_iterations: int = 5) -> str:
 
     return "Erro: Limite máximo de iterações atingido sem uma resposta final."
 
-pergunta_1 = "Quantos mouses gamers estão no inventário?"
-print(f"**Interação 1: {pergunta_1}**")
-resposta_1 = run_react_agent(pergunta_1)
-print(f"\n**RESPOSTA FINAL DO AGENTE 1:** \n{resposta_1}\n")
+# pergunta_1 = "Quantos mouses gamers estão no inventário?"
+# print(f"**Interação 1: {pergunta_1}**")
+# resposta_1 = run_react_agent(pergunta_1)
+# print(f"\n**RESPOSTA FINAL DO AGENTE 1:** \n{resposta_1}\n")
+#
+# print("\n" + "=" * 50 + "\n")
+#
+# pergunta_2 = "Quanto custa uma impressora?"
+# print(f"**Interação 2: {pergunta_2}**")
+# resposta_2 = run_react_agent(pergunta_2)
+# print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
+#
+# print("\n" + "=" * 50 + "\n")
+#
+# pergunta_3 = "Tem cadeira no estoque?"
+# print(f"**Interação 3: {pergunta_3}**")
+# resposta_3 = run_react_agent(pergunta_3)
+# print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
+#
+# print("\n" + "=" * 50 + "\n")
+#
+# pergunta_3 = "Tem cadeira no estoque?"
+# print(f"**Interação 3: {pergunta_3}**")
+# resposta_3 = run_react_agent(pergunta_3)
+# print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
+#
+# print("\n" + "=" * 50 + "\n")
+#
+# pergunta_4 = "Qual o produto mais caro do estoque?"
+# print(f"**Interação 4: {pergunta_4}**")
+# resposta_4 = run_react_agent(pergunta_4)
+# print(f"\nRESPOSTA FINAL DO AGENTE 4:** \n{resposta_4}\n")
+#
+# print("\n" + "=" * 50 + "\n")
 
-print("\n" + "=" * 50 + "\n")
-
-pergunta_2 = "Quanto custa uma impressora?"
-print(f"**Interação 2: {pergunta_2}**")
-resposta_2 = run_react_agent(pergunta_2)
-print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
-
-print("\n" + "=" * 50 + "\n")
-
-pergunta_3 = "Tem cadeira no estoque?"
-print(f"**Interação 3: {pergunta_3}**")
-resposta_3 = run_react_agent(pergunta_3)
-print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
-
-print("\n" + "=" * 50 + "\n")
-
-pergunta_3 = "Tem cadeira no estoque?"
-print(f"**Interação 3: {pergunta_3}**")
-resposta_3 = run_react_agent(pergunta_3)
-print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
-
-print("\n" + "=" * 50 + "\n")
-
-pergunta_4 = "Qual o produto mais caro do estoque?"
-print(f"**Interação 4: {pergunta_4}**")
-resposta_4 = run_react_agent(pergunta_4)
-print(f"\nRESPOSTA FINAL DO AGENTE 4:** \n{resposta_4}\n")
+pergunta_5 = "Qual o valor de um teclado, uma impressora e uma webcam?"
+print(f"**Interação 5: {pergunta_5}**")
+resposta_5 = run_react_agent(pergunta_5)
+print(f"\nRESPOSTA FINAL DO AGENTE 5:** \n{resposta_5}\n")
 
 print("\n" + "=" * 50 + "\n")
