@@ -174,40 +174,40 @@ def run_react_agent(pergunta: str, max_iterations: int = 5) -> str:
 
     return "Erro: Limite máximo de iterações atingido sem uma resposta final."
 
-# pergunta_1 = "Quantos mouses gamers estão no inventário?"
-# print(f"**Interação 1: {pergunta_1}**")
-# resposta_1 = run_react_agent(pergunta_1)
-# print(f"\n**RESPOSTA FINAL DO AGENTE 1:** \n{resposta_1}\n")
-#
-# print("\n" + "=" * 50 + "\n")
-#
-# pergunta_2 = "Quanto custa uma impressora?"
-# print(f"**Interação 2: {pergunta_2}**")
-# resposta_2 = run_react_agent(pergunta_2)
-# print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
-#
-# print("\n" + "=" * 50 + "\n")
-#
-# pergunta_3 = "Tem cadeira no estoque?"
-# print(f"**Interação 3: {pergunta_3}**")
-# resposta_3 = run_react_agent(pergunta_3)
-# print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
-#
-# print("\n" + "=" * 50 + "\n")
-#
-# pergunta_3 = "Tem cadeira no estoque?"
-# print(f"**Interação 3: {pergunta_3}**")
-# resposta_3 = run_react_agent(pergunta_3)
-# print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
-#
-# print("\n" + "=" * 50 + "\n")
-#
-# pergunta_4 = "Qual o produto mais caro do estoque?"
-# print(f"**Interação 4: {pergunta_4}**")
-# resposta_4 = run_react_agent(pergunta_4)
-# print(f"\nRESPOSTA FINAL DO AGENTE 4:** \n{resposta_4}\n")
-#
-# print("\n" + "=" * 50 + "\n")
+pergunta_1 = "Quantos mouses gamers estão no inventário?"
+print(f"**Interação 1: {pergunta_1}**")
+resposta_1 = run_react_agent(pergunta_1)
+print(f"\n**RESPOSTA FINAL DO AGENTE 1:** \n{resposta_1}\n")
+
+print("\n" + "=" * 50 + "\n")
+
+pergunta_2 = "Quanto custa uma impressora?"
+print(f"**Interação 2: {pergunta_2}**")
+resposta_2 = run_react_agent(pergunta_2)
+print(f"\nRESPOSTA FINAL DO AGENTE 2:** \n{resposta_2}\n")
+
+print("\n" + "=" * 50 + "\n")
+
+pergunta_3 = "Tem cadeira no estoque?"
+print(f"**Interação 3: {pergunta_3}**")
+resposta_3 = run_react_agent(pergunta_3)
+print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
+
+print("\n" + "=" * 50 + "\n")
+
+pergunta_3 = "Tem cadeira no estoque?"
+print(f"**Interação 3: {pergunta_3}**")
+resposta_3 = run_react_agent(pergunta_3)
+print(f"\nRESPOSTA FINAL DO AGENTE 3:** \n{resposta_3}\n")
+
+print("\n" + "=" * 50 + "\n")
+
+pergunta_4 = "Qual o produto mais caro do estoque?"
+print(f"**Interação 4: {pergunta_4}**")
+resposta_4 = run_react_agent(pergunta_4)
+print(f"\nRESPOSTA FINAL DO AGENTE 4:** \n{resposta_4}\n")
+
+print("\n" + "=" * 50 + "\n")
 
 pergunta_5 = "Qual o valor de um teclado, uma impressora e uma webcam?"
 print(f"**Interação 5: {pergunta_5}**")
