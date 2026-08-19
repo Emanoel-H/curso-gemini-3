@@ -3,6 +3,50 @@ import re
 from my_models import GEMINI_FLASH
 from my_keys import TAVILY_API_KEY, GEMINI_API_KEY
 import google.genai as genai
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
+from selenium.common.exceptions import WebDriverException, TimeoutException
+
+def scrape_restaurantes_info(url):
+    if not url:
+        print("Erro: URL vazia ou não localizada para raspagem.")
+        return None
+
+    try:
+        service = Service(ChromeDriverManager().install())
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        options.add_argument(
+            "user-agent=Mozilla/5.0 (Windows NT 10.0; win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126")
+
+        driver = webdriver.Chrome(service=service, options=options)
+        driver.set_page_load_timeout(30)
+    except Exception as e:
+        print(f"Erro ao inicializar o driver do Selenium: {e}")
+        return None
+
+    try:
+        print(f"Tentando carregar a página com Selenium: {url}")
+        driver.get(url)
+
+        driver.implicitly_wait(10)
+
+        response_text = driver.page_source
+    except TimeoutException:
+        print(f"Erro de tempo limite ao carregar página: {url}")
+        return None
+    except WebDriverException as e:
+        print(f"Erro ao carregar a página {url} com Selenium: {e}. Pode ser um bloqueio ou problema de conexão.")
+        return None
+    finally:
+        driver.quit()
+
+    soup = BeautifulSoup(response_text, "html.parser")
+    return soup
+
+soup_tripadvisor = None
 
 client = TavilyClient(api_key=TAVILY_API_KEY)
 cidade = "Belém do Pará"
