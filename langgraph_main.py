@@ -4,6 +4,7 @@ from my_keys import TAVILY_API_KEY, GEMINI_API_KEY
 import google.genai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_core.messages import HumanMessage
 from IPython.display import Image, display
 
 
@@ -21,8 +22,22 @@ def main():
 
     abot = Agent(model, [tool], system=prompt)
 
-    
+    messages = [HumanMessage(content="Como está o tempo em Salvador hoje?")]
 
+    print("Iniciando interação do Agente:")
+    final_result_state = None
+
+    for s in abot.graph.stream({"messages": messages}):
+        print(s)
+        print("---")
+        final_result_state = s
+
+    print("\nResultado Final:")
+
+    if final_result_state and 'llm' in final_result_state and final_result_state['llm']['messages']:
+        print(final_result_state['llm']['messages'][-1].content)
+    else:
+        print("Nenhum resultado final ou resultado inesperado.")
     # mermaid_code = abot.graph.get_graph().draw_mermaid()
     #
     # print(mermaid_code)
