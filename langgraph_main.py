@@ -14,24 +14,26 @@ def main():
     Procure informações apenas quando tiver certeza do que você quer. \
     Se precisar pesquisar alguma informação antes de fazer uma pergunta de acompanhamento, você tem permissão para fazer isso!
     """
-    
+
     tool = TavilySearchResults(max_results=4)
 
     model = ChatGoogleGenerativeAI(model=GEMINI_FLASH, temperature=0, api_key= GEMINI_API_KEY)
 
     abot = Agent(model, [tool], system=prompt)
 
-    mermaid_code = abot.graph.get_graph().draw_mermaid()
+    
 
-    print(mermaid_code)
-
-    try:
-        image_data = abot.graph.get_graph().draw_mermaid_png()
-        display(Image(data=image_data))
-    except Exception as e:
-        print(f"Erro ao tentar gerar PNG do Mermaid: {e}")
-        print("\nCertifique-se de que a sua versão do LangGraph possui o método `.draw_mermaid_png()`.")
-        print("Como alternativa, use `.draw_mermaid()` para obter a string e visualizar externamente.")
+    # mermaid_code = abot.graph.get_graph().draw_mermaid()
+    #
+    # print(mermaid_code)
+    #
+    # try:
+    #     image_data = abot.graph.get_graph().draw_mermaid_png()
+    #     display(Image(data=image_data))
+    # except Exception as e:
+    #     print(f"Erro ao tentar gerar PNG do Mermaid: {e}")
+    #     print("\nCertifique-se de que a sua versão do LangGraph possui o método `.draw_mermaid_png()`.")
+    #     print("Como alternativa, use `.draw_mermaid()` para obter a string e visualizar externamente.")
     # agent = Agent(system="Você é um assistente útil e objetivo")
     # print(agent("Hebrew prayers like: Baruch attah Adonai Elohinu Melech Haolam borei peri..."))
 
