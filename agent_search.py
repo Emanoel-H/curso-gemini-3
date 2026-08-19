@@ -84,3 +84,24 @@ if tripadvisor_url:
 print("-" * 50)
 print(f"URL Final do Tripadvisor para raspagem: {tripadvisor_url if tripadvisor_url else 'NÃO ENCONTRADO'}")
 print("-" * 50)
+
+soup_tripadvisor = None
+
+if 'tripadvisor_url' in locals() and tripadvisor_url:
+    print(f"\nTentando raspar a página identificada: {tripadvisor_url}")
+    soup_tripadvisor = scrape_restaurantes_info(tripadvisor_url)
+
+    if soup_tripadvisor:
+        print("HTML da página do Tripadvisor obtido com sucesso!")
+        page_title_tag = soup_tripadvisor.find('title')
+        if page_title_tag:
+            print(f"Título da página: {page_title_tag.get_text(strip=True)}")
+        else:
+            print("Não foi possível encontrar o título da página.")
+    else:
+        print("Falha ao raspar página do Tripadvisor. Verifique o URL ou se o site está bloqueando.")
+
+else:
+    print("Não há URL no Tripadvisor válido para raspar (obtido no Bloco 1).")
+
+print("-" * 50)
